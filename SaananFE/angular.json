@@ -24,6 +24,9 @@
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/app/features/admin"]
+            },
             "assets": [
               { "glob": "**/*", "input": "public", "output": "" }
             ],
@@ -74,5 +77,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

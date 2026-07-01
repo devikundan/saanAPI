@@ -3,12 +3,10 @@ import { inject } from '@angular/core';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { NotificationService } from '../services/notification.service';
-import { TokenService } from '../services/token.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const notificationService = inject(NotificationService);
-  const tokenService = inject(TokenService);
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
