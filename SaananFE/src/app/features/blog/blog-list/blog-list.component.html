@@ -1,0 +1,39 @@
+<section class="blog-page">
+  <div class="container">
+    <div class="blog-page__header">
+      <h1>Blog</h1>
+      <p>Insights, tutorials, and updates from our team</p>
+    </div>
+
+    <div class="blog-grid">
+      @for (blog of blogs(); track blog.id) {
+        <a [routerLink]="['/blog', blog.slug]" class="blog-card">
+          @if (blog.featuredImageUrl) {
+            <img [src]="blog.featuredImageUrl" [alt]="blog.title" class="blog-card__image">
+          }
+          <div class="blog-card__body">
+            <h3 class="blog-card__title">{{ blog.title }}</h3>
+            @if (blog.summary) {
+              <p class="blog-card__summary">{{ blog.summary }}</p>
+            }
+            <div class="blog-card__meta">
+              <span>{{ blog.author }}</span>
+              @if (blog.publishedAt) {
+                <span>{{ blog.publishedAt | date:'mediumDate' }}</span>
+              }
+            </div>
+          </div>
+        </a>
+      } @empty {
+        <p class="blog-page__empty">No blog posts published yet.</p>
+      }
+    </div>
+
+    @if (totalPages() > 1) {
+      <app-pagination
+        [currentPage]="currentPage()"
+        [totalPages]="totalPages()"
+        (pageChange)="onPageChange($event)" />
+    }
+  </div>
+</section>

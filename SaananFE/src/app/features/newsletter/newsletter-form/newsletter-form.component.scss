@@ -1,0 +1,35 @@
+.newsletter-form__inner {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.newsletter-form__input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-family: inherit;
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+}
+
+.newsletter-form__btn {
+  white-space: nowrap;
+  padding: 0.75rem 1.25rem;
+}
+
+.newsletter-form__success {
+  color: var(--color-success);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.newsletter-form__error {
+  color: var(--color-error);
+  font-size: 0.75rem;
+  margin-top: 0.375rem;
+}

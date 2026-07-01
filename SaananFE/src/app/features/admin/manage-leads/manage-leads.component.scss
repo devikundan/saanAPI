@@ -1,0 +1,14 @@
+@use 'admin-crud';
+
+.lead-detail {
+  margin-bottom: 1rem;
+
+  p {
+    margin: 0.25rem 0;
+    font-size: 0.875rem;
+  }
+}
+
+.lead-status-form {
+  margin-top: 1rem;
+}

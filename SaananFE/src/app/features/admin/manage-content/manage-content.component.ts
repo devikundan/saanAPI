@@ -8,52 +8,8 @@ import { NotificationService } from '@core/services/notification.service';
   selector: 'app-manage-content',
   standalone: true,
   imports: [ReactiveFormsModule, DatePipe],
-  template: `
-    <div class="admin-page">
-      <div class="admin-page__header">
-        <h1>Site Content</h1>
-      </div>
-
-      @if (editingItem()) {
-        <div class="admin-form-panel">
-          <h3>Edit: {{ editingItem()!.sectionKey }}</h3>
-          <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="form-group"><label>Title *</label><input formControlName="title"></div>
-            <div class="form-group"><label>Body</label><textarea formControlName="body" rows="6"></textarea></div>
-            <div class="form-row">
-              <div class="form-group"><label>Image URL</label><input formControlName="imageUrl"></div>
-              <div class="form-group"><label>Meta Data (JSON)</label><input formControlName="metaData"></div>
-            </div>
-            <div class="form-actions">
-              <button type="submit" class="btn btn--primary" [disabled]="form.invalid || isSaving()">Save</button>
-              <button type="button" class="btn btn--secondary" (click)="editingItem.set(null)">Cancel</button>
-            </div>
-          </form>
-        </div>
-      }
-
-      @if (isLoading()) {
-        <p class="admin-loading">Loading...</p>
-      } @else {
-        <table class="admin-table">
-          <thead><tr><th>Section</th><th>Title</th><th>Updated</th><th>Actions</th></tr></thead>
-          <tbody>
-            @for (item of items(); track item.id) {
-              <tr>
-                <td><code>{{ item.sectionKey }}</code></td>
-                <td>{{ item.title }}</td>
-                <td>{{ item.updatedAt | date:'short' }}</td>
-                <td class="actions-cell">
-                  <button class="btn-icon" (click)="editItem(item)">✏️</button>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      }
-    </div>
-  `,
-  styles: [`@use 'admin-crud'; code { font-size: 0.8125rem; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; }`]
+  templateUrl: './manage-content.component.html',
+  styleUrl: './manage-content.component.scss'
 })
 export class ManageContentComponent implements OnInit {
   private readonly service = inject(AdminContentService);

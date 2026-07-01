@@ -7,10 +7,6 @@ import { ToastComponent } from '@shared/components/toast/toast.component';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, LoadingSpinnerComponent, ToastComponent],
-  template: `
-    <router-outlet />
-    <app-loading-spinner />
-    <app-toast />
-  `
+  templateUrl: './app.component.html'
 })
 export class AppComponent {}

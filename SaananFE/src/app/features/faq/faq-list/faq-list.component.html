@@ -1,0 +1,26 @@
+<section class="faq-page">
+  <div class="container">
+    <div class="faq-page__header">
+      <h1>Frequently Asked Questions</h1>
+      <p>Find answers to common questions about our services</p>
+    </div>
+
+    <div class="faq-list">
+      @for (faq of faqs(); track faq.id) {
+        <div class="faq-item" [class.faq-item--open]="openId() === faq.id">
+          <button class="faq-item__question" (click)="toggle(faq.id)">
+            <span>{{ faq.question }}</span>
+            <span class="faq-item__icon">{{ openId() === faq.id ? '−' : '+' }}</span>
+          </button>
+          @if (openId() === faq.id) {
+            <div class="faq-item__answer">
+              <p>{{ faq.answer }}</p>
+            </div>
+          }
+        </div>
+      } @empty {
+        <p class="faq-page__empty">No FAQs available yet.</p>
+      }
+    </div>
+  </div>
+</section>

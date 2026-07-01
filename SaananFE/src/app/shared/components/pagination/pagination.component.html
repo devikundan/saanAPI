@@ -1,0 +1,21 @@
+<div class="pagination" role="navigation" aria-label="Pagination">
+  <button
+    class="pagination__btn"
+    [disabled]="currentPage() <= 1"
+    (click)="pageChange.emit(currentPage() - 1)"
+    aria-label="Previous page">
+    &laquo; Prev
+  </button>
+
+  <span class="pagination__info">
+    Page {{ currentPage() }} of {{ totalPages() }}
+  </span>
+
+  <button
+    class="pagination__btn"
+    [disabled]="currentPage() >= totalPages()"
+    (click)="pageChange.emit(currentPage() + 1)"
+    aria-label="Next page">
+    Next &raquo;
+  </button>
+</div>

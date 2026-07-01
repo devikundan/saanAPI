@@ -1,0 +1,41 @@
+<section class="blog-detail">
+  <div class="container">
+    @if (blog(); as post) {
+      <nav class="breadcrumb">
+        <a routerLink="/blog">Blog</a>
+        <span>/</span>
+        <span>{{ post.title }}</span>
+      </nav>
+
+      <article class="blog-detail__article">
+        @if (post.featuredImageUrl) {
+          <img [src]="post.featuredImageUrl" [alt]="post.title" class="blog-detail__image">
+        }
+
+        <h1>{{ post.title }}</h1>
+
+        <div class="blog-detail__meta">
+          <span>By {{ post.author }}</span>
+          @if (post.publishedAt) {
+            <span>{{ post.publishedAt | date:'longDate' }}</span>
+          }
+        </div>
+
+        @if (post.tags) {
+          <div class="blog-detail__tags">
+            @for (tag of post.tags.split(','); track tag) {
+              <span class="tag">{{ tag.trim() }}</span>
+            }
+          </div>
+        }
+
+        <div class="blog-detail__content" [innerHTML]="post.content"></div>
+      </article>
+    } @else if (notFound()) {
+      <div class="blog-detail__not-found">
+        <h2>Blog post not found</h2>
+        <a routerLink="/blog">Back to Blog</a>
+      </div>
+    }
+  </div>
+</section>

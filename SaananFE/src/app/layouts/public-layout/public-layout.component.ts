@@ -7,17 +7,7 @@ import { FooterComponent } from '@shared/components/footer/footer.component';
   selector: 'app-public-layout',
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
-  template: `
-    <app-header />
-    <main class="main-content">
-      <router-outlet />
-    </main>
-    <app-footer />
-  `,
-  styles: [`
-    .main-content {
-      min-height: calc(100vh - 200px);
-    }
-  `]
+  templateUrl: './public-layout.component.html',
+  styleUrl: './public-layout.component.scss'
 })
 export class PublicLayoutComponent {}

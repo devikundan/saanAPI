@@ -1,0 +1,22 @@
+<header class="header">
+  <div class="container header__inner">
+    <a routerLink="/" class="header__logo">
+      <span class="header__logo-text">Saanan</span>
+    </a>
+
+    <button class="header__toggle" (click)="toggleMenu()" [attr.aria-expanded]="isMenuOpen">
+      <span class="header__toggle-bar"></span>
+      <span class="header__toggle-bar"></span>
+      <span class="header__toggle-bar"></span>
+    </button>
+
+    <nav class="header__nav" [class.header__nav--open]="isMenuOpen">
+      <a routerLink="/services" routerLinkActive="active" (click)="closeMenu()">Services</a>
+      <a routerLink="/portfolio" routerLinkActive="active" (click)="closeMenu()">Portfolio</a>
+      <a routerLink="/blog" routerLinkActive="active" (click)="closeMenu()">Blog</a>
+      <a routerLink="/faq" routerLinkActive="active" (click)="closeMenu()">FAQ</a>
+      <a routerLink="/contact" routerLinkActive="active" (click)="closeMenu()">Contact</a>
+      <a routerLink="/get-started" class="btn btn--primary header__cta" (click)="closeMenu()">Get Started</a>
+    </nav>
+  </div>
+</header>

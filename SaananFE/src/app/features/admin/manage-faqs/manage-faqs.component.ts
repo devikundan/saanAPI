@@ -9,63 +9,8 @@ import { NotificationService } from '@core/services/notification.service';
   selector: 'app-manage-faqs',
   standalone: true,
   imports: [ReactiveFormsModule],
-  template: `
-    <div class="admin-page">
-      <div class="admin-page__header">
-        <h1>Manage FAQs</h1>
-        <button class="btn btn--primary" (click)="openForm()">+ Add FAQ</button>
-      </div>
-
-      @if (showForm()) {
-        <div class="admin-form-panel">
-          <h3>{{ editingId() ? 'Edit' : 'New' }} FAQ</h3>
-          <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="form-group"><label>Question *</label><input formControlName="question"></div>
-            <div class="form-group"><label>Answer *</label><textarea formControlName="answer" rows="4"></textarea></div>
-            <div class="form-row">
-              <div class="form-group"><label>Category</label><input formControlName="category"></div>
-              <div class="form-group"><label>Display Order</label><input formControlName="displayOrder" type="number"></div>
-            </div>
-            <div class="form-group form-group--checkbox"><label><input formControlName="isActive" type="checkbox"> Active</label></div>
-            <div class="form-actions">
-              <button type="submit" class="btn btn--primary" [disabled]="form.invalid || isSaving()">Save</button>
-              <button type="button" class="btn btn--secondary" (click)="closeForm()">Cancel</button>
-            </div>
-          </form>
-        </div>
-      }
-
-      @if (isLoading()) {
-        <p class="admin-loading">Loading...</p>
-      } @else if (data()) {
-        <table class="admin-table">
-          <thead><tr><th>Question</th><th>Category</th><th>Order</th><th>Active</th><th>Actions</th></tr></thead>
-          <tbody>
-            @for (item of data()!.items; track item.id) {
-              <tr>
-                <td>{{ item.question }}</td>
-                <td>{{ item.category || '—' }}</td>
-                <td>{{ item.displayOrder }}</td>
-                <td><span class="badge" [class.badge--active]="item.isActive">{{ item.isActive ? 'Yes' : 'No' }}</span></td>
-                <td class="actions-cell">
-                  <button class="btn-icon" (click)="editItem(item)">✏️</button>
-                  <button class="btn-icon btn-icon--danger" (click)="deleteItem(item.id)">🗑️</button>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-        @if (data()!.totalPages > 1) {
-          <div class="admin-pagination">
-            <button [disabled]="!data()!.hasPreviousPage" (click)="loadPage(currentPage() - 1)">← Prev</button>
-            <span>Page {{ currentPage() }} of {{ data()!.totalPages }}</span>
-            <button [disabled]="!data()!.hasNextPage" (click)="loadPage(currentPage() + 1)">Next →</button>
-          </div>
-        }
-      }
-    </div>
-  `,
-  styles: [`@use 'admin-crud';`]
+  templateUrl: './manage-faqs.component.html',
+  styleUrl: './manage-faqs.component.scss'
 })
 export class ManageFaqsComponent implements OnInit {
   private readonly service = inject(AdminFaqsService);

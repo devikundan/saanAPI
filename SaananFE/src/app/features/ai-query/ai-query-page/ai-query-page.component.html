@@ -1,0 +1,58 @@
+<section class="ai-page">
+  <div class="container">
+    <div class="ai-page__wrapper">
+      <div class="ai-page__header">
+        <h1>AI Assistant</h1>
+        <p>Ask about our services and get intelligent recommendations powered by AI.</p>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="ai-form">
+        <div class="ai-form__input-row">
+          <textarea
+            formControlName="query"
+            placeholder="e.g., I need a mobile app for my e-commerce business..."
+            rows="3"
+            class="ai-form__textarea"></textarea>
+          <button
+            type="submit"
+            class="btn btn--primary ai-form__btn"
+            [disabled]="form.invalid || isLoading()">
+            {{ isLoading() ? 'Thinking...' : 'Ask AI' }}
+          </button>
+        </div>
+      </form>
+
+      @if (result()) {
+        <div class="ai-result">
+          <div class="ai-result__header">
+            <span class="ai-result__category">{{ result()!.classifiedCategory }}</span>
+            <span class="ai-result__confidence">
+              {{ (result()!.confidenceScore * 100).toFixed(0) }}% confidence
+            </span>
+          </div>
+
+          @if (result()!.aiResponse) {
+            <div class="ai-result__response">
+              <p>{{ result()!.aiResponse }}</p>
+            </div>
+          }
+
+          @if (result()!.suggestedServiceSlug) {
+            <div class="ai-result__suggestion">
+              <span>Recommended service:</span>
+              <a [routerLink]="['/services', result()!.suggestedServiceSlug]" class="btn btn--secondary">
+                View Service →
+              </a>
+            </div>
+          }
+        </div>
+      }
+
+      @if (errorMessage()) {
+        <div class="ai-error">
+          <p>{{ errorMessage() }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

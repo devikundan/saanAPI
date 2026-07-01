@@ -1,0 +1,22 @@
+<div class="newsletter-form">
+  @if (isSubscribed()) {
+    <p class="newsletter-form__success">✓ You're subscribed! Thank you.</p>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="newsletter-form__inner">
+      <input
+        formControlName="email"
+        type="email"
+        placeholder="Enter your email"
+        class="newsletter-form__input">
+      <button
+        type="submit"
+        class="btn btn--primary newsletter-form__btn"
+        [disabled]="form.invalid || isSubmitting()">
+        {{ isSubmitting() ? '...' : 'Subscribe' }}
+      </button>
+    </form>
+    @if (errorMessage()) {
+      <p class="newsletter-form__error">{{ errorMessage() }}</p>
+    }
+  }
+</div>

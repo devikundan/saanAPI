@@ -8,67 +8,8 @@ import { NewsletterSubscribeRequest } from '@core/models/newsletter.model';
   selector: 'app-newsletter-form',
   standalone: true,
   imports: [ReactiveFormsModule],
-  template: `
-    <div class="newsletter-form">
-      @if (isSubscribed()) {
-        <p class="newsletter-form__success">✓ You're subscribed! Thank you.</p>
-      } @else {
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="newsletter-form__inner">
-          <input
-            formControlName="email"
-            type="email"
-            placeholder="Enter your email"
-            class="newsletter-form__input">
-          <button
-            type="submit"
-            class="btn btn--primary newsletter-form__btn"
-            [disabled]="form.invalid || isSubmitting()">
-            {{ isSubmitting() ? '...' : 'Subscribe' }}
-          </button>
-        </form>
-        @if (errorMessage()) {
-          <p class="newsletter-form__error">{{ errorMessage() }}</p>
-        }
-      }
-    </div>
-  `,
-  styles: [`
-    .newsletter-form__inner {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .newsletter-form__input {
-      flex: 1;
-      padding: 0.75rem 1rem;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      font-size: 0.875rem;
-      font-family: inherit;
-
-      &:focus {
-        outline: none;
-        border-color: var(--color-primary);
-      }
-    }
-
-    .newsletter-form__btn {
-      white-space: nowrap;
-      padding: 0.75rem 1.25rem;
-    }
-
-    .newsletter-form__success {
-      color: var(--color-success);
-      font-size: 0.875rem;
-      font-weight: 500;
-    }
-
-    .newsletter-form__error {
-      color: var(--color-error);
-      font-size: 0.75rem;
-      margin-top: 0.375rem;
-    }
-  `]
+  templateUrl: './newsletter-form.component.html',
+  styleUrl: './newsletter-form.component.scss'
 })
 export class NewsletterFormComponent {
   private readonly fb = inject(FormBuilder);
