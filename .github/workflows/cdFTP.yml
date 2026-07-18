@@ -1,21 +1,33 @@
-name: Deploy
+name: Continuous Deployment
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Continuous Integration"]
+    types:
+      - completed
 
 jobs:
-  ftp-deploy:
+  deploy:
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
 
-      - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Download Publish Artifact
+        uses: actions/download-artifact@v4
         with:
-          server: ftp.yourdomain.com
+          name: dotnet-publish
+          path: ./publish
+
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
+          protocol: ftp
+          port: 21
+          local-dir: ./publish/
           server-dir: /public_html/
