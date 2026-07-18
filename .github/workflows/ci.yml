@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - develop
+
   pull_request:
     branches:
       - main
@@ -15,30 +16,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          node-version: 20
-          cache: npm
+          dotnet-version: '8.0.x'
 
-      - name: Install Dependencies
-        run: npm ci
+      - name: Restore Packages
+        run: dotnet restore
 
-      - name: Run Lint
-        run: npm run lint --if-present
+      - name: Build Solution
+        run: dotnet build --configuration Release --no-restore
 
-      - name: Run Unit Tests
-        run: npm test --if-present
+      - name: Run Tests
+        run: dotnet test --configuration Release --no-build --verbosity normal
 
-      - name: Build Application
-        run: npm run build
+      - name: Publish Application
+        run: dotnet publish -c Release -o ./publish
 
-      - name: Upload Build Artifact
+      - name: Upload Publish Folder
         uses: actions/upload-artifact@v4
         with:
-          name: website-build
-          path: dist/
+          name: dotnet-publish
+          path: ./publish
