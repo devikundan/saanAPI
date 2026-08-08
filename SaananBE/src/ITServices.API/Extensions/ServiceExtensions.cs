@@ -34,7 +34,7 @@ public static class ServiceExtensions
         services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
         // FluentValidation
-        services.AddValidatorsFromAssemblyContaining<MappingProfile>();
+        //services.AddValidatorsFromAssemblyContaining<MappingProfile>();
 
         return services;
     }

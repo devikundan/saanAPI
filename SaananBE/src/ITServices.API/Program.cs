@@ -1,21 +1,25 @@
 using ITServices.API.Extensions;
 using ITServices.API.Middleware;
+using ITServices.Domain.Entities;
 using ITServices.Infrastructure;
 using ITServices.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add controllers
 builder.Services.AddControllers();
 
-// Add infrastructure (EF Core, Repositories, Email)
-builder.Services.AddInfrastructure(builder.Configuration);
 
 // Add application services (business logic, AutoMapper, FluentValidation)
 builder.Services.AddApplicationServices();
 
 // Add JWT authentication
 builder.Services.AddJwtAuthentication(builder.Configuration);
+
+
+// Add infrastructure (EF Core, Repositories, Email)
+builder.Services.AddInfrastructure(builder.Configuration);
 
 // Add Swagger
 builder.Services.AddSwaggerConfiguration();
