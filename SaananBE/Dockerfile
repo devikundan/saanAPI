@@ -4,10 +4,10 @@ WORKDIR /src
 
 COPY . .
 
-RUN dotnet restore "src/ITServices.API/ITServices.API.csproj"
+RUN dotnet restore "SaananBE/src/ITServices.API/ITServices.API.csproj"
 
 RUN dotnet publish \
-    "src/ITServices.API/ITServices.API.csproj" \
+    "SaananBE/src/ITServices.API/ITServices.API.csproj" \
     -c Release \
     -o /app/publish \
     --no-restore
