@@ -25,7 +25,17 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddSwaggerConfiguration();
 
 // Add CORS
-builder.Services.AddCorsConfiguration(builder.Configuration);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+//builder.Services.AddCorsConfiguration(builder.Configuration);
 
 // Add rate limiting
 builder.Services.AddRateLimitingConfiguration();
@@ -46,7 +56,7 @@ app.UseSwaggerUI(options =>
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-app.UseCors("AllowAngularApp");
+app.UseCors("AllowAll");
 
 app.UseRateLimiter();
 
