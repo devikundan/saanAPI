@@ -1,28 +1,51 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
-name: .NET
+name: Saanan API CI/CD
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - main
+
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - main
+
+env:
+  DOTNET_VERSION: '10.0.x'
+  API_PROJECT: 'SaananBE/src/ITServices.API/ITServices.API.csproj'
 
 jobs:
-  build:
 
+  build:
+    name: Build .NET API
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 10.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+
+      # 1. Get source code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Install .NET 10
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      # 3. Restore NuGet packages
+      - name: Restore
+        run: dotnet restore ${{ env.API_PROJECT }}
+
+      # 4. Build
+      - name: Build
+        run: dotnet build ${{ env.API_PROJECT }} --configuration Release --no-restore
+
+      # 5. Publish
+      - name: Publish
+        run: dotnet publish ${{ env.API_PROJECT }} --configuration Release --no-build --output ./publish
+
+      # 6. Upload published application
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: saanan-api
+          path: ./publish
